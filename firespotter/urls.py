@@ -18,5 +18,7 @@ from pages import views
 from django.urls import path
 
 urlpatterns = [
-    path('', views.root, name="root")
+    path('', views.root, name="root"),
+    path('about', views.about, name='about'),
+    path('contact', views.contact, name='contact')
 ]
