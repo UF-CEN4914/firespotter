@@ -55,7 +55,7 @@ ROOT_URLCONF = 'firespotter.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        "DIRS": ["firespotter/templates/"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
