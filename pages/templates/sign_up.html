@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block page_content %}
+
+<style>
+   
+    #sign_up {
+        padding: 2em;
+    }
+    form {
+        width: 80%;
+        margin: 0 auto 1em auto;
+
+    }
+    .form-container {
+    }
+    h3 {
+        margin: 1em auto 0.5em auto;
+        border-bottom: 1px solid #ccc;
+    }
+    .form-row {
+        box-shadow: 1px 1px 5px #ccc;
+        border-radius: 30px;
+        border: 1px solid var(--sign-in-box-border-color);
+        background-color: var(--sign-in-box-bg-color);
+    }
+    .btn {
+        width: 100%;
+    }
+</style>
+<div id="sign_up" class="container">
+    <div class="row form-row">
+        <form action="/" method="post">
+            <h3> Create Organization </h3>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="org_name"> Name </label>
+                    <input class="form-control"type="text" name="org_name" placeholder="Company, LLC">
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="org_phone_num"> Phone Number </label>
+                            <input type="text" class="form-control bfh-phone" name="org_phone_number" data-country="phone">   
+                        </div>
+                        <div class="col-md-6">
+                            <label for="org_email"> Email </label>
+                            <input type="text" class="form-control bfh-phone" name="org_email" data-country="countries_phone1">   
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="org_country"> Country </label>
+                            <select id="countries" class="form-control" data-country="US"></select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="org_region"> Region </label>
+                            <select id="region" class="form-control" data-country="US"></select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="org_timezone"> Timezone </label>
+                            <select id="timezone" class="form-control" data-country="US"></select>
+                        </div>
+                    </div>
+                </div>
+                <h4> Initial Admin Setup </h3>
+                <div class="form-group">
+                    <label for="admin_email"> Admin Email </label>
+                    <input type="text" id="admin_email" class="form-control" placeholder="username@domain.com"></input>
+                </div>
+                <div class="form-group">
+                    <label for="admin_password"> Admin Password </label>
+                    <input type="password" class="form-control"></input>
+                </div>
+                <div class="form-group">
+                    <label for="admin_password"> Admin Password Confirmation </label>
+                    <input type="password" class="form-control"></input>
+                </div>
+                <br>
+
+                <div class="form-group">
+                    <input class="btn btn-success" type="submit" value="Create Organization">
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
