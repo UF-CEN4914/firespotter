@@ -35,6 +35,23 @@
         padding: 0 1em 0.5em 1em !important;
     }
 </style>
+<script>
+    $(document).ready(function (){
+        $("#countries").change(function() {
+
+            var val = $(this).val();
+            $("#region").children().remove();
+
+            if (val == "United_States") {
+                $("#region").append("<option value='California'> California </option>");
+                $("#region").append("<option value='Midwest'> Midwest </option>");
+            } else {
+                $("#region").append("<option value='Amazon Rainforest'> Amazon Rainforest </option>");
+                $("#region").append("<option value='East Coast'> East Coast </option>")
+            }
+        });
+    });
+</script>
 <div id="sign_up" class="container">
     <div class="row form-row">
         <form action="/" method="post">
@@ -58,17 +75,19 @@
                 </div>
                 <div class="form-group">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="org_country"> Country </label>
-                            <select id="countries" class="form-control" data-country="US"></select>
+                            <select id="countries" class="form-control">
+                                <option value="United_States"> United States</option>
+                                <option value="Brazil">Brazil</option>
+                            </select>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <label for="org_region"> Region </label>
-                            <select id="region" class="form-control" data-country="US"></select>
-                        </div>
-                        <div class="col-md-4">
-                            <label for="org_timezone"> Timezone </label>
-                            <select id="timezone" class="form-control" data-country="US"></select>
+                            <select id="region" class="form-control">
+                                <option value="California"> California </option>
+                                <option value="Midwest"> Midwest </option>
+                            </select>
                         </div>
                     </div>
                 </div>
