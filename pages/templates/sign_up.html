@@ -40,7 +40,6 @@
         $("#countries").change(function() {
             var val = $(this).val();
             $("#region").children().remove();
-
             if (val == "United_States") {
                 $("#region").append("<option value='California'> California </option>");
                 $("#region").append("<option value='Midwest'> Midwest </option>");
@@ -54,6 +53,7 @@
 <div id="sign_up" class="container">
     <div class="row form-row">
         <form action="/" method="post">
+            {% csrf_token %}
             <h3> Create Organization </h3>
             <div class="form-container">
                 <div class="form-group">
