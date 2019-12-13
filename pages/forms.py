@@ -55,6 +55,24 @@ class SignupForm(forms.Form):
             "id": "region"
         })
     )
+    admin_first_name = forms.CharField(
+        max_length = 200,
+        label = "First Name",
+        required = True,
+        widget = forms.TextInput(attrs = {
+            "class": "form-control",
+            "placeholder": "Jane"
+        })
+    )
+    admin_last_name = forms.CharField(
+        max_length = 200,
+        label = "Last Name",
+        required = True,
+        widget = forms.TextInput(attrs = {
+            "class": "form-control",
+            "placeholder": "Smith"
+        })
+    )
     admin_email = forms.CharField(
         max_length = 200,
         label = "Admin Email",
