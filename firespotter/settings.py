@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages',
     'organizations',
-    'cameras'
+    'cameras',
+    'user_details'
 ]
 
 MIDDLEWARE = [
