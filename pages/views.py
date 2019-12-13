@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import SignupForm
 
 # Create your views here.
 def root(request):
@@ -11,13 +12,9 @@ def contact(request):
   return render(request, 'contact.html', {})
 
 def sign_up(request):
-  countries_to_regions =  {
-    "US": ["Mid West", "California"],
-    "BR": ["Amazon"],
-    "DRC": ["Grasslands"]
-  }
+  form = SignupForm()
+  
   context = {
-    "country_to_region" : countries_to_regions,
-    "sample" : "ans"
+    "form": form
   }
   return render(request, 'sign_up.html', context)

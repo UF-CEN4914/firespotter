@@ -2,7 +2,6 @@
 {% block page_content %}
 
 <style>
-   
     #sign_up {
         padding: 2em;
     }
@@ -40,7 +39,7 @@
         $("#countries").change(function() {
             var val = $(this).val();
             $("#region").children().remove();
-            if (val == "United_States") {
+            if (val == "US") {
                 $("#region").append("<option value='California'> California </option>");
                 $("#region").append("<option value='Midwest'> Midwest </option>");
             } else {
@@ -52,56 +51,50 @@
 </script>
 <div id="sign_up" class="container">
     <div class="row form-row">
-        <form action="/" method="post">
+        <form action="/organization" method="post">
             {% csrf_token %}
             <h3> Create Organization </h3>
             <div class="form-container">
                 <div class="form-group">
-                    <label for="org_name"> Name </label>
-                    <input class="form-control"type="text" name="org_name" placeholder="Company, LLC" required="true">
+                    {{ form.org_name.label_tag }}
+                    {{ form.org_name }}
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="org_email"> Email </label>
-                            <input type="text" class="form-control bfh-phone" name="org_email" required="true">   
+                            {{ form.org_email.label_tag }}
+                            {{ form.org_email }}
                         </div>
                         <div class="col-md-6">
-                            <label for="org_phone_num"> Phone Number </label>
-                            <input type="text" class="form-control bfh-phone" name="org_phone_number">   
+                            {{ form.org_phone_num.label_tag }}
+                            {{ form.org_phone_num }} 
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="org_country"> Country </label>
-                            <select id="countries" class="form-control">
-                                <option value="United_States"> United States</option>
-                                <option value="Brazil">Brazil</option>
-                            </select>
+                            {{ form.org_country.label_tag }}
+                            {{ form.org_country }}
                         </div>
                         <div class="col-md-6">
-                            <label for="org_region"> Region </label>
-                            <select id="region" class="form-control">
-                                <option value="California"> California </option>
-                                <option value="Midwest"> Midwest </option>
-                            </select>
+                            {{ form.org_region.label_tag }}
+                            {{ form.org_region }}
                         </div>
                     </div>
                 </div>
                 <h4> Initial Admin Setup </h3>
                 <div class="form-group">
-                    <label for="admin_email"> Admin Email </label>
-                    <input type="text" id="admin_email" class="form-control" placeholder="username@domain.com" required="true"></input>
+                    {{ form.admin_email.label_tag }}
+                    {{ form.admin_email }}
                 </div>
                 <div class="form-group">
-                    <label for="admin_password"> Admin Password </label>
-                    <input type="password" id="password" class="form-control" required="true"></input>
+                    {{ form.admin_password.label_tag }}
+                    {{ form.admin_password }}
                 </div>
                 <div class="form-group">
-                    <label for="admin_password"> Admin Password Confirmation </label>
-                    <input type="password" id="password_confirmation" class="form-control" required="true"></input>
+                    {{ form.admin_password_confirmation.label_tag }}
+                    {{ form.admin_password_confirmation }}
                 </div>
                 <br>
                 <div class="form-group">
