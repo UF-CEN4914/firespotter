@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from organizations.models import Organization
 
 # Create your views here.
 def show(request, pk):
