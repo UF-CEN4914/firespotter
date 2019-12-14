@@ -5,10 +5,22 @@ from django.apps import apps
 from django.shortcuts import redirect
 from organizations.models import Organization
 from user_details.models import UserDetail
+from user_details.models import UserDetail
+from django.contrib.auth import authenticate, login
 
 # Create your views here.
 def root(request):
   form = SigninForm()
+  if (request.method == "POST"):
+    if (form.is_valid()):
+      username = request.POST['username']
+      password = request.POST['password']
+      user = authenticate(request, username=username, password=password)
+      if user is not None:
+        login(request, user)
+        user_detail = UserDetail.objects.get(pk=user.id)
+        return redirect(f'/organization/{user_detail.org_id}')
+
   context = {
     "form": form
   }
@@ -35,11 +47,12 @@ def sign_up(request):
       )
       org.save()
 
+      username = form.cleaned_data['admin_email']
+      password = form.cleaned_data['admin_password']
       user = User.objects.create_user(
-        form.cleaned_data['admin_first_name']
-        + form.cleaned_data['admin_last_name'],
+        username,
         form.cleaned_data['admin_email'], 
-        form.cleaned_data['admin_password']
+        password 
       )
       user.first_name = form.cleaned_data['admin_first_name']
       user.last_name = form.cleaned_data['admin_last_name']
@@ -51,6 +64,10 @@ def sign_up(request):
         role_id = 1
       )
       user_detail.save()
+
+      user = authenticate(request, username=username, password=password)
+      login(request, user)
+
       return redirect(f'/organization/{org.id}')
       
   context = {
