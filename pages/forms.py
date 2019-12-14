@@ -1,5 +1,23 @@
 from django import forms
 
+class SigninForm(forms.Form):
+    email = forms.CharField(
+        max_length = 200,
+        label = "Email",
+        required = True,
+        widget = forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "username@domain.com"
+        })
+    )
+    password = forms.CharField(
+        label = "Password",
+        required = True,
+        widget = forms.PasswordInput(attrs = {
+            "class": "form-control"
+        })
+    )
+
 class SignupForm(forms.Form):
     COUNTRY_CHOICES = (
         ("US", "United States"),

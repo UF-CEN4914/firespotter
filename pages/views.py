@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import SignupForm
+from .forms import SignupForm, SigninForm
 from django.contrib.auth.models import User
 from django.apps import apps
 from django.shortcuts import redirect
@@ -8,7 +8,11 @@ from user_details.models import UserDetail
 
 # Create your views here.
 def root(request):
-  return render(request, 'root.html', {})
+  form = SigninForm()
+  context = {
+    "form": form
+  }
+  return render(request, 'root.html', context)
 
 def about(request):
   return render(request, 'about.html', {})
