@@ -7,10 +7,21 @@ from organizations.models import Organization
 from user_details.models import UserDetail
 from user_details.models import UserDetail
 from django.contrib.auth import authenticate, login
+from django.contrib.auth import logout
 
-# Create your views here.
+def sign_out(request):
+  logout(request)
+  return redirect("/")
+
 def root(request):
   form = SigninForm()
+  if (request.user.is_authenticated):
+    print("\n\n\n=====\n\n\n")
+    print(request.user.id)
+    print("\n\n======\n\n\n")
+    user_detail = UserDetail.objects.get(pk=request.user.id)
+    return redirect(f'/organization/{user_detail.org_id}')
+
   if (request.method == "POST"):
     if (form.is_valid()):
       username = request.POST['username']

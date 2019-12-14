@@ -24,5 +24,6 @@ urlpatterns = [
     path('about', page_views.about, name='about'),
     path('contact', page_views.contact, name='contact'),
     path('sign_up', page_views.sign_up, name='sign_up'),
+    path('sign_out', page_views.sign_out, name='sign_out'),
     path("organization/", include("organizations.urls")),
 ]
