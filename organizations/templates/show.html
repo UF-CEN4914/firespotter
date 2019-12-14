@@ -1,6 +1,46 @@
 {% extends "sign_in_base.html" %}
 
 {% block page_content %}
-<h1> Organization Show Page </h1>
-<h1> {{ org.name }} </h1>
+<div id="camera-view">
+    <br></br>
+    <h4> {{ org.name }} </h4>
+    <div class="camera-list">
+        <div class="row">
+            {% for i in '123'|make_list  %}
+                <div class="camera col-md-4">
+                    <img src="https://www.positive.news/wp-content/uploads/2019/03/feat-1800x0-c-center.jpg">
+                    <h5> Camera #{{i}} </h5>
+                    <p> No Fire! </p>
+                </div>
+            {% endfor %}
+            <div class="camera bad col-md-4">
+                <img src="https://media.nationalgeographic.org/assets/photos/593/059/2c9de895-9d16-48d4-b5ce-14055e5bb06b.jpg">
+                <h5> Camera 4 </h5>
+                <p> Fire! </p>
+            </div>
+            {% for i in '56'|make_list  %}
+                <div class="camera col-md-4">
+                    <img src="https://www.positive.news/wp-content/uploads/2019/03/feat-1800x0-c-center.jpg">
+                    <h5> Camera #{{i}} </h5>
+                    <p> No Fire! </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<style>
+    #camera-view {
+        width: 80%;
+        margin: 0 auto;
+    }
+    .camera {
+    }
+    .bad {
+        border: 1px solid red;
+    }
+    .camera img {
+        width: 100%;
+        border-radius: 10px;
+    }
+</style>
 {% endblock %}
