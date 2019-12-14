@@ -14,4 +14,18 @@ def show(request, pk):
 
 def details(request, pk):
     org = Organization.objects.get(pk=pk)
-    u_details = UserDetail.objects.get(id=org.id)
+    u_details = org.userdetail_set.all()
+    users = []
+    admins = []
+    for detail in u_details:
+        if (detail.role_id == 1):
+            admins.append(detail.user)
+        else:
+            user.append(detail.user)
+
+    context = {
+        "users": users,
+        "admins": admins,
+        "org": org
+    }
+    return render(request, "details.html", context)
