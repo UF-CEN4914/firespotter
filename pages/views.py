@@ -13,12 +13,6 @@ def sign_out(request):
 
 def root(request):
   form = SigninForm()
-  if (request.user.is_authenticated):
-    print("\n\n\n=====\n\n\n")
-    print(request.user.id)
-    print("\n\n======\n\n\n")
-    user_detail = UserDetail.objects.get(pk=request.user.id)
-    return redirect(f'/organization/{user_detail.org_id}')
 
   if (request.method == "POST"):
     if (form.is_valid()):
@@ -68,10 +62,10 @@ def sign_up(request):
       user.save()
 
       user_detail = UserDetail (
-        user_id = user.id,
-        org_id = org.id,
         role_id = 1
       )
+      user_detail.user_id = user.id
+      user_detail.organization = org
       user_detail.save()
 
       user = authenticate(request, username=username, password=password)
