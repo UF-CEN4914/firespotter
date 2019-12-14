@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from organizations.models import Organization
+from user_details.models import UserDetail
+from django.contrib.auth.models import User
+from django.shortcuts import redirect
 
-# Create your views here.
 def show(request, pk):
     org = Organization.objects.get(pk=pk)
 
@@ -9,3 +11,7 @@ def show(request, pk):
         "org": org
     }
     return render(request, "show.html", context)
+
+def details(request, pk):
+    org = Organization.objects.get(pk=pk)
+    u_details = UserDetail.objects.get(id=org.id)

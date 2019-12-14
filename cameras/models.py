@@ -1,8 +1,12 @@
 from django.db import models
+from organizations.models import Organization
 
 # Create your models here.
 class Camera(models.Model):
-    org_id = models.IntegerField()
+    organization = models.ForeignKey(
+        'organizations.Organization',
+        on_delete=models.DO_NOTHING,
+    )    
     ip_address = models.CharField(max_length=100)
     refresh_rate_in_minutes = models.DecimalField(max_digits=5, decimal_places=2)
     username = models.TextField() 

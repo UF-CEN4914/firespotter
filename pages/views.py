@@ -1,10 +1,8 @@
 from django.shortcuts import render
 from .forms import SignupForm, SigninForm
 from django.contrib.auth.models import User
-from django.apps import apps
 from django.shortcuts import redirect
 from organizations.models import Organization
-from user_details.models import UserDetail
 from user_details.models import UserDetail
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
