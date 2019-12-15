@@ -17,10 +17,11 @@ def details(request, pk):
     u_details = org.userdetail_set.all()
     users = []
     admins = []
+
     is_signed_in = request.user.is_authenticated
-    if (~is_signed_in):
+    if (not is_signed_in):
         return redirect("/")
-        
+
     for detail in u_details:
         if (detail.role_id == 1):
             admins.append(detail.user)
