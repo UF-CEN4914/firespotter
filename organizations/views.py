@@ -17,16 +17,25 @@ def details(request, pk):
     u_details = org.userdetail_set.all()
     users = []
     admins = []
+    is_signed_in = request.user.is_authenticated
+    if (~is_signed_in):
+        return redirect("/")
+        
     for detail in u_details:
         if (detail.role_id == 1):
             admins.append(detail.user)
         else:
             users.append(detail.user)
 
+    is_admin = False
+    if (is_signed_in):
+        ud = request.user.userdetail_set.all().first()
+        is_admin = ud.role_id == 1
+        
     context = {
         "users": users,
         "admins": admins,
         "org": org,
-        "is_admin": request.user.is_authenticated
+        "is_admin": is_admin
     }
     return render(request, "details.html", context)
