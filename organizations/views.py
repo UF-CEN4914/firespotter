@@ -21,11 +21,12 @@ def details(request, pk):
         if (detail.role_id == 1):
             admins.append(detail.user)
         else:
-            user.append(detail.user)
+            users.append(detail.user)
 
     context = {
         "users": users,
         "admins": admins,
-        "org": org
+        "org": org,
+        "is_admin": request.user.is_authenticated
     }
     return render(request, "details.html", context)

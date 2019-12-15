@@ -1,0 +1,88 @@
+{% extends "sign_in_base.html" %}
+
+{% block page_content %}
+<div class="details">
+    <h4> {{ org.name }} </h4>
+    <h5> Admins </h5>
+    <table class="table admins table-striped table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                {% if is_admin %}
+                    <th scope="col">Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for admin in admins %}
+                <tr>
+                    <th scope="col"> {{ admin.first_name }} </th>
+                    <th scope="col"> {{ admin.last_name }} </th>
+                    <th scope="col"> {{ admin.email }} </th>
+                    {% if is_admin %}
+                        <th scope="col">
+                            <button class="btn btn-sm btn-warning"> Edit </button>
+                            <button class="btn btn-sm btn-danger"> Delete </button>
+                        </th>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h5> Normal Users </h5>
+    <table class="table admins table-striped table-hover table-dark">
+        <thead class>
+            <tr>
+                <th scope="col">First Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                {% if is_admin %}
+                    <th scope="col">Actions</th>
+                {% endif %}
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <th scope="col"> {{ user.first_name }} </th>
+                    <th scope="col"> {{ user.last_name }} </th>
+                    <th scope="col"> {{ user.email }} </th>
+
+                    {% if is_admin %}
+                        <th scope="col">
+                            <button class="btn btn-xs btn-primary"> Make Admin </button>
+                            <button class="btn btn-xs btn-warning"> Edit </button>
+                            <button class="btn btn-xs btn-danger"> Delete </button>
+                        </th>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<style>
+    .details {
+        width: 80%;
+        margin: 2em auto;
+        padding: 1em 2em;
+        border-radius: 30px;
+        border: 1px solid var(--sign-in-box-border-color);
+        background-color: var(--sign-in-box-bg-color);
+        color: #000;
+        font-weight: bold;
+        box-shadow: 1px 1px 5px #ccc;
+    }
+    h4 {
+        padding-bottom: 0.5em;
+        border-bottom: 1px solid #ccc;
+    }
+    table {
+        border-radius: 15px;
+    }
+</style>
+{% endblock %}
