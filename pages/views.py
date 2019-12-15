@@ -15,14 +15,13 @@ def root(request):
   form = SigninForm()
 
   if (request.method == "POST"):
-    if (form.is_valid()):
-      username = request.POST['username']
-      password = request.POST['password']
-      user = authenticate(request, username=username, password=password)
-      if user is not None:
-        login(request, user)
-        user_detail = UserDetail.objects.get(pk=user.id)
-        return redirect(f'/organization/{user_detail.org_id}')
+    username = request.POST['email']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+      login(request, user)
+      user_detail = user.userdetail_set.all().first()
+      return redirect(f'/organization/{user_detail.organization_id}')
 
   context = {
     "form": form
