@@ -45,13 +45,13 @@ def details(request, pk):
         else:
             users.append(detail.user)
         
-    admin_form = UserForm()
+    form = UserForm()
     context = {
         "users": users,
         "admins": admins,
         "org": org,
         "is_admin": is_admin,
-        "form": admin_form
+        "form": form
     }
     return render(request, "details.html", context)
 
@@ -64,7 +64,13 @@ def profile(request, oid, uid):
     if (ud.organization_id != oid or ud.user_id != uid):
         return redirect(f"/organization/{ud.organization_id}/profile/{ud.user_id}")
 
-    context = {}
+    form = UserForm()
+    form['first_name'].initial = ud.user.first_name
+    form['last_name'].initial = ud.user.last_name
+    form['email'].initial = ud.user.email
+    context = {
+        "form": form,
+    }
     return render(request, "profile.html", context)
 
     
