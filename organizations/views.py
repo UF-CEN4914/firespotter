@@ -8,6 +8,14 @@ from .forms import UserForm
 from django.shortcuts import redirect
 
 def show(request, pk):
+    is_signed_in = request.user.is_authenticated
+    if (not is_signed_in):
+        return redirect("/")
+        
+    ud = request.user.userdetail_set.all().first()
+    if (ud.organization_id != pk):
+        return redirect(f"/organization/{ud.organization_id}")
+        
     org = Organization.objects.get(pk=pk)
 
     context = {
