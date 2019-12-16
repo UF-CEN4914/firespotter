@@ -52,7 +52,7 @@ def details(request, pk):
         
     ud = request.user.userdetail_set.all().first()
     if (ud.organization_id != pk):
-        return redirect(f"/organization/{pk}")
+        return redirect(f"/organization/{ud.organization_id}")
 
     is_admin = ud.role_id == 1
 
