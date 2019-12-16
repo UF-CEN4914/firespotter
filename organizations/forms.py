@@ -7,7 +7,7 @@ class UserForm(forms.Form):
     )
     first_name = forms.CharField(
         max_length = 200,
-        label = "Email",
+        label = "First Name",
         required = True,
         widget = forms.TextInput(attrs={
             "class": "form-control",

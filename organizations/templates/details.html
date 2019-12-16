@@ -64,7 +64,7 @@
         </tbody>
     </table>
     {% if is_admin %}
-        <form action="/organization/create_admin" method="post" class="admin-form">
+        <form action="create_user" method="post" class="admin-form">
             {% csrf_token %}
              <div class="form-group">
                 <div class="row">

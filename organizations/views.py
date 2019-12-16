@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from organizations.models import Organization
 from user_details.models import UserDetail
 from django.contrib.auth.models import User
@@ -14,8 +15,28 @@ def show(request, pk):
     }
     return render(request, "show.html", context)
 
-def create_admin(request, pk):
-    
+def create_user(request, pk):
+    if (request.method == "POST"):
+        form = UserForm(request.POST)
+        if (form.is_valid()):
+            username = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = User.objects.create_user(
+                username,
+                form.cleaned_data['email'], 
+                password 
+            )
+            user.first_name = form.cleaned_data['first_name']
+            user.last_name = form.cleaned_data['last_name']
+            user.save()
+
+            user_detail = UserDetail (
+                role_id = form.cleaned_data['admin_select']
+            )
+            user_detail.user_id = user.id
+            user_detail.organization = Organization.objects.get(pk=pk)
+            user_detail.save()
+            
     next = request.POST.get('next', '/')
     return HttpResponseRedirect(next)
 
