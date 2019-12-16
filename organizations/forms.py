@@ -1,6 +1,10 @@
 from django import forms
 
-class AdminForm(forms.Form):
+class UserForm(forms.Form):
+    YES_NO = (
+        (0, "No"),
+        (1, "Yes")
+    )
     first_name = forms.CharField(
         max_length = 200,
         label = "Email",
@@ -43,5 +47,15 @@ class AdminForm(forms.Form):
         widget = forms.PasswordInput(attrs = {
             "class": "form-control",
             "autocomplete": "new-password"
+        })
+    )
+    admin_select = forms.ChoiceField (
+    choices = YES_NO,
+    label = "Is Admin",
+    initial = "No",
+    required = True,
+        widget = forms.Select(attrs = {
+            "class": "form-control",
+            "id": "admin-select"
         })
     )

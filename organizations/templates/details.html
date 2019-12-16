@@ -32,43 +32,6 @@
             {% endfor %}
         </tbody>
     </table>
-    {% if is_admin %}
-        <form action="/organization/create_admin" method="post" class="admin-form">
-            {% csrf_token %}
-             <div class="form-group">
-                <div class="row">
-                    <div class="col-md-6">
-                        {{ admin_form.first_name.label_tag }}
-                        {{ admin_form.first_name }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ admin_form.last_name.label_tag }}
-                        {{ admin_form.last_name }}
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                {{ admin_form.email.label_tag }}
-                {{ admin_form.email }}
-            </div>
-            <div class="form-group">
-                {{ admin_form.password.label_tag }}
-                {{ admin_form.password }}
-            </div>
-            <div class="form-group">
-                {{ admin_form.password_confirmation.label_tag }}
-                {{ admin_form.password_confirmation }}
-            </div>
-            <div class="form-group">
-                <input class="btn btn-success" type="submit" value="Create Admin">
-                <button class="btn btn-danger hide-admin-form"> Cancel </button>
-            </div>
-        </form>
-        <div class="admin-action">
-            <button class="btn btn-primary show-admin-form"> Add Admin </button>
-        </div>
-        <br></br>
-    {% endif%}
     <h5> Normal Users </h5>
     <table class="table admins table-striped table-hover table-dark">
         <thead class>
@@ -101,10 +64,55 @@
         </tbody>
     </table>
     {% if is_admin %}
+        <form action="/organization/create_admin" method="post" class="admin-form">
+            {% csrf_token %}
+             <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form.first_name.label_tag }}
+                        {{ form.first_name }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.last_name.label_tag }}
+                        {{ form.last_name }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.admin_select.label_tag }}
+                        {{ form.admin_select }}
+                    </div>
+                </div>
+                
+            </div>
+            <div class="form-group">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+            <div class="form-group">
+                {{ form.password_confirmation.label_tag }}
+                {{ form.password_confirmation }}
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="org_id" value="{{ org.id }}">
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <input class="btn btn-success" type="submit" value="Create Admin">
+                <button class="btn btn-danger hide-admin-form"> Cancel </button>
+            </div>
+        </form>
         <div class="admin-action">
-            <button class="btn btn-success"> Add User </button>
+            <button class="btn btn-primary show-admin-form"> Add User </button>
         </div>
-    {% endif %}
+        <br></br>
+    {% endif%}
 </div>
 <script>
     $(document).ready(function (){
