@@ -2,6 +2,8 @@ from django.shortcuts import render
 from organizations.models import Organization
 from user_details.models import UserDetail
 from django.contrib.auth.models import User
+from .forms import AdminForm
+
 from django.shortcuts import redirect
 
 def show(request, pk):
@@ -33,10 +35,12 @@ def details(request, pk):
         ud = request.user.userdetail_set.all().first()
         is_admin = ud.role_id == 1
         
+    admin_form = AdminForm()
     context = {
         "users": users,
         "admins": admins,
         "org": org,
-        "is_admin": is_admin
+        "is_admin": is_admin,
+        "admin_form": admin_form
     }
     return render(request, "details.html", context)
