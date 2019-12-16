@@ -49,6 +49,12 @@ def details(request, pk):
     is_signed_in = request.user.is_authenticated
     if (not is_signed_in):
         return redirect("/")
+        
+    ud = request.user.userdetail_set.all().first()
+    if (ud.organization_id != pk):
+        return redirect(f"/organization/{pk}")
+
+    is_admin = ud.role_id == 1
 
     for detail in u_details:
         if (detail.role_id == 1):
@@ -56,10 +62,7 @@ def details(request, pk):
         else:
             users.append(detail.user)
 
-    is_admin = False
-    if (is_signed_in):
-        ud = request.user.userdetail_set.all().first()
-        is_admin = ud.role_id == 1
+    
         
     admin_form = UserForm()
     context = {
