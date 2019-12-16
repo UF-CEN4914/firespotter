@@ -19,14 +19,14 @@
         <tbody>
             {% for admin in admins %}
                 <tr>
-                    <th scope="col"> {{ admin.first_name }} </th>
-                    <th scope="col"> {{ admin.last_name }} </th>
-                    <th scope="col"> {{ admin.email }} </th>
+                    <td style="width: 25%" scope="col"> {{ admin.first_name }} </th>
+                    <td style="width: 25%" scope="col"> {{ admin.last_name }} </th>
+                    <td style="width: 25%" scope="col"> {{ admin.email }} </th>
                     {% if is_admin %}
-                        <th scope="col">
+                        <td scope="col">
                             <button class="btn btn-sm btn-warning"> Edit </button>
                             <button class="btn btn-sm btn-danger"> Delete </button>
-                        </th>
+                        </td>
                     {% endif %}
                 </tr>
             {% endfor %}
@@ -48,9 +48,9 @@
         <tbody>
             {% for user in users %}
                 <tr>
-                    <th scope="col"> {{ user.first_name }} </th>
-                    <th scope="col"> {{ user.last_name }} </th>
-                    <th scope="col"> {{ user.email }} </th>
+                    <td style="width: 20%" scope="col"> {{ user.first_name }} </th>
+                    <td style="width: 20%" scope="col"> {{ user.last_name }} </th>
+                    <td style="width: 20%" scope="col"> {{ user.email }} </th>
 
                     {% if is_admin %}
                         <th scope="col">
