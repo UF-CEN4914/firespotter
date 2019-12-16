@@ -23,6 +23,52 @@ def show(request, pk):
     }
     return render(request, "show.html", context)
 
+def details(request, pk):
+    org = Organization.objects.get(pk=pk)
+    u_details = org.userdetail_set.all()
+    users = []
+    admins = []
+
+    is_signed_in = request.user.is_authenticated
+    if (not is_signed_in):
+        return redirect("/")
+        
+    ud = request.user.userdetail_set.all().first()
+    if (ud.organization_id != pk):
+        return redirect(f"/organization/{ud.organization_id}")
+
+    is_admin = ud.role_id == 1
+
+    for detail in u_details:
+        if (detail.role_id == 1):
+            admins.append(detail.user)
+        else:
+            users.append(detail.user)
+        
+    admin_form = UserForm()
+    context = {
+        "users": users,
+        "admins": admins,
+        "org": org,
+        "is_admin": is_admin,
+        "form": admin_form
+    }
+    return render(request, "details.html", context)
+
+def profile(request, oid, uid):
+    is_signed_in = request.user.is_authenticated
+    if (not is_signed_in):
+        return redirect("/")
+        
+    ud = request.user.userdetail_set.all().first()
+    if (ud.organization_id != oid or ud.user_id != uid):
+        return redirect(f"/organization/{ud.organization_id}/profile/{ud.user_id}")
+
+    context = {}
+    return render(request, "profile.html", context)
+
+    
+
 def details_redirect(request):
     is_signed_in = request.user.is_authenticated
     if (not is_signed_in):
@@ -30,6 +76,14 @@ def details_redirect(request):
         
     ud = request.user.userdetail_set.all().first()
     return redirect(f"/organization/{ud.organization_id}/details")
+
+def profile_redirect(request):
+    is_signed_in = request.user.is_authenticated
+    if (not is_signed_in):
+        return redirect("/")
+        
+    ud = request.user.userdetail_set.all().first()
+    return redirect(f"/organization/{ud.organization_id}/profile/{ud.user_id}")
 
 def create_user(request, pk):
     if (request.method == "POST"):
@@ -55,37 +109,3 @@ def create_user(request, pk):
             
     next = request.POST.get('next', '/')
     return HttpResponseRedirect(next)
-
-def details(request, pk):
-    org = Organization.objects.get(pk=pk)
-    u_details = org.userdetail_set.all()
-    users = []
-    admins = []
-
-    is_signed_in = request.user.is_authenticated
-    if (not is_signed_in):
-        return redirect("/")
-        
-    ud = request.user.userdetail_set.all().first()
-    if (ud.organization_id != pk):
-        return redirect(f"/organization/{ud.organization_id}")
-
-    is_admin = ud.role_id == 1
-
-    for detail in u_details:
-        if (detail.role_id == 1):
-            admins.append(detail.user)
-        else:
-            users.append(detail.user)
-
-    
-        
-    admin_form = UserForm()
-    context = {
-        "users": users,
-        "admins": admins,
-        "org": org,
-        "is_admin": is_admin,
-        "form": admin_form
-    }
-    return render(request, "details.html", context)
