@@ -13,7 +13,12 @@ def sign_out(request):
 
 def root(request):
   form = SigninForm()
+  is_signed_in = request.user.is_authenticated
 
+  if (is_signed_in):
+    ud = request.user.userdetail_set.all().first()
+    return redirect(f"/organization/{ud.organization_id}")        
+    
   if (request.method == "POST"):
     username = request.POST['email']
     password = request.POST['password']
