@@ -15,13 +15,21 @@ def show(request, pk):
     ud = request.user.userdetail_set.all().first()
     if (ud.organization_id != pk):
         return redirect(f"/organization/{ud.organization_id}")
-        
+
     org = Organization.objects.get(pk=pk)
 
     context = {
         "org": org
     }
     return render(request, "show.html", context)
+
+def details_redirect(request):
+    is_signed_in = request.user.is_authenticated
+    if (not is_signed_in):
+        return redirect("/")
+        
+    ud = request.user.userdetail_set.all().first()
+    return redirect(f"/organization/{ud.organization_id}/details")
 
 def create_user(request, pk):
     if (request.method == "POST"):
