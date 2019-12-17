@@ -26,12 +26,12 @@ def clear_data():
     print("Clearing Database")
     print("\tDeleting User Details Information")
     UserDetail.objects.all().delete()
+    print("\tDeleting Cameras")
+    Camera.objects.all().delete()
     print("\tDeleting User Information")
     User.objects.all().delete()
     print("\tDeleting Organization Information")
     Organization.objects.all().delete()
-    print("\tDeleting Cameras")
-    Camera.objects.all.delete()
 
 def create_users():
     f = ["John", "Jain", "Luke", "Lacey", "Aaron", "Allison"]
@@ -94,7 +94,8 @@ def create_cameras(orgs):
                 password = password,
                 ip_address = ip_address,
                 refresh_rate_in_minutes = refresh_rate_in_minutes,
-                organization_id = org.id
+                organization_id = org.id,
+                short_name = org.name + " " + str(i)
             )
             camera.save()
             print(f"\t\tCreating camera: {ip_address}, {username}, {password}, {refresh_rate_in_minutes}")
