@@ -4,6 +4,7 @@ from organizations.models import Organization
 from user_details.models import UserDetail
 from django.contrib.auth.models import User
 from .forms import UserForm
+from apis.CameraInterface import CameraInterface
 
 from django.shortcuts import redirect
 
@@ -17,10 +18,19 @@ def show(request, pk):
         return redirect(f"/organization/{ud.organization_id}")
 
     org = Organization.objects.get(pk=pk)
+    camera_frames = []
+    cameras = org.camera_set.all()
+    camera_i = CameraInterface()
+
+    for camera in cameras:
+        camera_frames.append(CameraInterface.fetchFrame(camera))
 
     context = {
-        "org": org
+        "org": org,
+        "cameras": cameras,
+        "camera_frames": camera_frames
     }
+
     return render(request, "show.html", context)
 
 def details(request, pk):
