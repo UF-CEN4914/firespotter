@@ -1,4 +1,4 @@
-import Random
+from random import random
 
 class FireChecker():
     @staticmethod
