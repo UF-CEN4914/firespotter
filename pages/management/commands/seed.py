@@ -30,6 +30,8 @@ def clear_data():
     User.objects.all().delete()
     print("\tDeleting Organization Information")
     Organization.objects.all().delete()
+    print("\tDeleting Cameras")
+    Camera.objects.all.delete()
 
 def create_users():
     f = ["John", "Jain", "Luke", "Lacey", "Aaron", "Allison"]
