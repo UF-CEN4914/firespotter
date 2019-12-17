@@ -5,6 +5,8 @@ from user_details.models import UserDetail
 from django.contrib.auth.models import User
 from .forms import UserForm
 from apis.CameraInterface import CameraInterface
+from apis.FireChecker import FireChecker
+from apis.models.CameraInstance import CameraInstance
 
 from django.shortcuts import redirect
 
@@ -18,17 +20,22 @@ def show(request, pk):
         return redirect(f"/organization/{ud.organization_id}")
 
     org = Organization.objects.get(pk=pk)
-    camera_frames = []
+
     cameras = org.camera_set.all()
-    camera_i = CameraInterface()
+    camera_instances = []
 
     for camera in cameras:
-        camera_frames.append(CameraInterface.fetchFrame(camera))
+        camera_instance = CameraInstance()
+        camera_instance.ip_address = camera.ip_address
+        camera_instance.image_path = CameraInterface.fetchFrame(camera)
+        camera_instance.is_on_fire = FireChecker.IsWildFire(camera_instance.image_path)
+        camera_instance.short_name = camera.short_name
+
+        camera_instances.append(camera_instance)
 
     context = {
         "org": org,
-        "cameras": cameras,
-        "camera_frames": camera_frames
+        "cameras": camera_instances,
     }
 
     return render(request, "show.html", context)
