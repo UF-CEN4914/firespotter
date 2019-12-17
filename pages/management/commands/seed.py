@@ -32,7 +32,7 @@ def clear_data():
 def create_users():
     f = ["John", "Jain", "Luke", "Lacey", "Aaron", "Allison"]
     l = ["Hodson", "Pfeiffer", "Williams"]
-    e = ["jane@gmail.com", "john@gmail.com", "luke@gmail.com", "lacey@gmail.com", "aaron@gmail.com", "allison@gmail.com"]
+    e = ["john@gmail.com", "jane@gmail.com", "luke@gmail.com", "lacey@gmail.com", "aaron@gmail.com", "allison@gmail.com"]
     users = []
     p = "password"
 
