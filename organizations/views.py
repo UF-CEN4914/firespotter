@@ -24,11 +24,6 @@ def show(request, pk):
     return render(request, "show.html", context)
 
 def details(request, pk):
-    org = Organization.objects.get(pk=pk)
-    u_details = org.userdetail_set.all()
-    users = []
-    admins = []
-
     is_signed_in = request.user.is_authenticated
     if (not is_signed_in):
         return redirect("/")
@@ -38,7 +33,11 @@ def details(request, pk):
         return redirect(f"/organization/{ud.organization_id}")
 
     is_admin = ud.role_id == 1
-
+    org = Organization.objects.get(pk=pk)
+    u_details = org.userdetail_set.all()
+    users = []
+    admins = []
+    
     for detail in u_details:
         if (detail.role_id == 1):
             admins.append(detail.user)
@@ -70,6 +69,7 @@ def profile(request, oid, uid):
     form['email'].initial = ud.user.email
     context = {
         "form": form,
+        "org": Organization.objects.get(pk=oid)
     }
     return render(request, "profile.html", context)
 
@@ -112,6 +112,30 @@ def create_user(request, pk):
             user_detail.user_id = user.id
             user_detail.organization = Organization.objects.get(pk=pk)
             user_detail.save()
+            
+    next = request.POST.get('next', '/')
+    return HttpResponseRedirect(next)
+
+def update_user(request, oid, uid):
+    is_signed_in = request.user.is_authenticated
+    if (not is_signed_in):
+        return redirect("/")
+        
+    ud = request.user.userdetail_set.all().first()
+    if (ud.organization_id != oid or ud.user_id != uid):
+        return redirect(f"/organization/{ud.organization_id}/profile/{ud.user_id}")
+
+    if (request.method == "POST"):
+        form = UserForm(request.POST)
+        form.is_valid()
+        user = User.objects.get(pk=uid)
+
+        user.username = form.cleaned_data['email']
+        user.email = form.cleaned_data['email']
+        user.password = form.cleaned_data['password']
+        user.first_name = first_name = form.cleaned_data['first_name']
+        user.last_name = form.cleaned_data['last_name']
+        user.save()
             
     next = request.POST.get('next', '/')
     return HttpResponseRedirect(next)

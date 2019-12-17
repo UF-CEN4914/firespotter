@@ -3,7 +3,7 @@
 {% block page_content %}
 <div class="profile">
     <h4> {{request.user.first_name}}'s Profile </h4 >
-    <form action="create_user" method="post" class="admin-form">
+    <form action="/organization/{{org.id}}/profile/{{user.id}}/update_user" method="post" class="admin-form">
         {% csrf_token %}
             <div class="form-group">
             <div class="row">
