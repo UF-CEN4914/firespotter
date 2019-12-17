@@ -26,4 +26,5 @@ urlpatterns = [
     path('sign_up', page_views.sign_up, name='sign_up'),
     path('sign_out', page_views.sign_out, name='sign_out'),
     path("organization/", include("organizations.urls")),
+    path("camera/", include("cameras.urls"))
 ]

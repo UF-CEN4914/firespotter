@@ -4,3 +4,4 @@ class CameraInstance(object):
     is_on_fire = False
     ip_address = ""
     short_name = ""
+    cid = -1

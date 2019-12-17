@@ -1,6 +1,9 @@
 from random import randint
 
 class CameraInterface(object):
+    # TODO(AaronWilliams): I think a good strategy is to pull the image from the camera and store it locally
+    # on the computer. Delete once a new frame is grabbed for the same camera. If we name image files
+    # under a convention this will be trivial. Reduces overhead for storing images in our DB
     @staticmethod
     def fetchFrame(camera):
         image_urls = [
@@ -13,6 +16,11 @@ class CameraInterface(object):
         ]
         return image_urls[randint(0, len(image_urls)-1)]
 
-    # TODO(Lukepfeiffer): I think a good strategy is to pull the image from the camera and store it locally
-    # on the computer. Delete once a new frame is grabbed for the same camera. If we name image files
-    # under a convention this will be trivial. Reduces overhead for storing images in our DB
+    # TODO(AaronWilliams): This method should return the stream from the camera source we pass in.
+    # Camera has: ip_address, username, password which should be sufficent in getting these.
+    # Relevent link: https://stackoverflow.com/questions/56555938/show-ip-camera-live-feed-in-django-webpage
+    
+    @staticmethod
+    def fetchFeed(camera):
+        camera_source = "https://www.ready.gov/sites/default/files/2019-09/Wildfire%20toolkit_1.jpg"
+        return camera_source

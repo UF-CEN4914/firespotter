@@ -30,7 +30,8 @@ def show(request, pk):
         camera_instance.image_path = CameraInterface.fetchFrame(camera)
         camera_instance.is_on_fire = FireChecker.IsWildFire(camera_instance.image_path)
         camera_instance.short_name = camera.short_name
-
+        camera_instance.cid = camera.id
+        
         camera_instances.append(camera_instance)
 
     context = {

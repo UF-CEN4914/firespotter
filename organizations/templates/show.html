@@ -10,7 +10,9 @@
                 <div class="img-container">
                     <img src="{{camera.image_path}}"> </img>
                 </div>
-                <h5> {{camera.short_name }} </h5>
+                <h5> 
+                    <a href="/camera/{{camera.cid}}"> {{camera.short_name }} </a>   
+                </h5>
                 {% if camera.is_on_fire %}
                     <p class="fire-text"> On Fire! </p>
                 {% else %}
@@ -20,6 +22,8 @@
         {% endfor %}
     </div>
 </div>
+<script>
+</script>
 <style>
     #camera-view {
         width: 80%;
@@ -43,6 +47,12 @@
     }
     .nofire-text {
         color: #168200; 
+    }
+    h5 a {
+        color: #006ea6 !important;
+    }
+    h5 a:hover {
+        text-decoration: underline;
     }
 </style>
 {% endblock %}

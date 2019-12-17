@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div class="camera-show">
+    <h5> {{ camera.short_name }} </h5>
+    <div class="feed-container">
+        <img src="{{ camera_feed }}"> </img>
+    </div>
+    <button class="btn btn-danger"> Show Details </button>
+    <div class="hide">
+        <button class="btn btn-primary"> Hide Details </button>
+
+        <div class="hide-content">
+            <h5> Details </h5>
+            <p> <b> IP Address:</b> {{ camera.ip_address }} </p>
+            <p> <b> Username: </b> {{ camera.username }} </p>
+            {% if is_admin %}
+                <p> <b> Password: </b> {{ camera.password }} </p>
+            {% else %}
+                <p> <b> Password: </b> Ask an adminstator for the password </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+        var fadeTime = 1000;
+
+    $(document).ready(function (){
+        $(".btn-danger").click(function() {
+            $(this).hide(1000);
+            $(".hide").show(1000);
+        });
+
+        $(".hide .btn").click(function() {
+            $(".hide").hide(fadeTime);
+            $(".btn-danger").show(fadeTime)
+        });
+    });
+</script>
+<style>
+    .hide {
+        display: none;
+        
+    }
+    .hide-content {
+        margin-top: 1em;
+        border: 1px solid #ccc;
+        padding: 1em;
+        border-radius: 15px;
+    }
+    .btn {
+        margin-top: 1em;
+    }
+    .camera-show {
+        width: 80%;
+        color: #fff;
+        margin: 2em auto;
+        padding: 1em 2em;
+        border-radius: 30px;
+        border: 1px solid var(--sign-in-box-border-color);
+        background-color: var(--sign-in-box-bg-color);
+        color: #000;
+        box-shadow: 1px 1px 5px #ccc;
+    }
+    .feed-container img {
+        width: 100%;
+        border-radius: 20px;
+    }
+    .feed-container {
+        width: 100%;
+        margin-top: 2em;
+    }
+    h5 {
+        border-bottom: 1px solid #ccc !important;
+        padding-bottom: 0.5em;
+    }
+</style>
+{% endblock %}
