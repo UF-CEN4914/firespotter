@@ -1,7 +1,9 @@
 from django.core.management.base import BaseCommand
 from organizations.models import Organization
 from user_details.models import UserDetail
+from cameras.models import Camera
 from django.contrib.auth.models import User
+from random import randint
 
 # Clear all data and creates addresses 
 MODE_REFRESH = 'refresh'
@@ -57,7 +59,7 @@ def create_users():
     return users
 
 def create_orgs():
-    names = ["Microsft", "Google", "Intel"]
+    names = ["Microsoft", "Google", "Intel"]
     emails = ["no-reply@microsoft.com", "go-reply@google.com", "i-reply@intel.com"]
     orgs = []
     print("Creating orgs")
@@ -74,6 +76,27 @@ def create_orgs():
         orgs.append(org)
     
     return orgs
+
+def create_cameras(orgs):
+    # TODO(lukerpfeiffer): Update these usernames/passwords to match the actual camera we have
+    username = "username"
+    password = "password"
+    ip_address = "some_garbage_ip"
+    print("Creating Cameras")
+    for org in orgs:
+        print(f"\tCreating {org.name} cameras")
+        for i in range(6):
+            refresh_rate_in_minutes = randint(1, 5)
+            camera = Camera(
+                username = username,
+                password = password,
+                ip_address = ip_address,
+                refresh_rate_in_minutes = refresh_rate_in_minutes,
+                organization_id = org.id
+            )
+            camera.save()
+            print(f"\t\tCreating camera: {ip_address}, {username}, {password}, {refresh_rate_in_minutes}")
+        
 
 def create_user_details(users, orgs):
     i = 0
@@ -93,4 +116,5 @@ def seed(self, mode):
 
     users = create_users()
     orgs = create_orgs()
-    user_details = create_user_details(users, orgs)
+    create_cameras(orgs)
+    create_user_details(users, orgs)
