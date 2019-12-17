@@ -11,7 +11,7 @@ def show(request, pk):
     is_signed_in = request.user.is_authenticated
     if (not is_signed_in):
         return redirect("/")
-        
+    
     ud = request.user.userdetail_set.all().first()
     if (ud.organization_id != pk):
         return redirect(f"/organization/{ud.organization_id}")
@@ -37,7 +37,7 @@ def details(request, pk):
     u_details = org.userdetail_set.all()
     users = []
     admins = []
-    
+
     for detail in u_details:
         if (detail.role_id == 1):
             admins.append(detail.user)
