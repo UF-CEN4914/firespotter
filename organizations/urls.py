@@ -9,5 +9,5 @@ urlpatterns = [
     path("details", views.details_redirect, name="details_redirect"),
     path("profile", views.profile_redirect, name="profile_redirect"),
     path("<int:oid>/profile/<int:uid>", views.profile, name="profile"),
-    path("<int:oid>/fetch_frame/<int:cid>", views.fetch_frame, name="fetch_frame")
+    path("<int:oid>/fetch_frame/<int:cid>/<int:time>", views.fetch_frame, name="fetch_frame")
 ]

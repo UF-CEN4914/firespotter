@@ -93,15 +93,21 @@ def profile(request, oid, uid):
     }
     return render(request, "profile.html", context)
 
-def fetch_frame(request, oid, cid):
+def fetch_frame(request, oid, cid, time):
     org = Organization.objects.get(pk=oid)
     camera = Camera.objects.get(pk=cid)
     image_path = CameraInterface.fetchFrame(camera)
+    should_update = False
+    refresh_rate = camera.refresh_rate_in_minutes
+    if (time % refresh_rate == 0):
+        should_update = True
+
     data = { 
         "ip_address": camera.ip_address,
         "image_path": image_path,
         "is_on_fire": FireChecker.IsWildFire(image_path),
         "short_name": camera.short_name,
+        "should_update": should_update,
         "cid": camera.id,
         "oid": org.id
     }

@@ -25,38 +25,42 @@
 <script>
     $(document).ready(function (){
         var minute_in_millis = 60000;
-        setInterval(fetch_frames, minute_in_millis);
+        var time = 0;
+        setInterval(fetch_frames, 2000);
 
         function fetch_frames(){
+            time = time + 1;
             $(".camera-container").each(function() {
                 var cid = $(this).data("camera-id");
                 var oid = $(this).data("org-id");
                 var camera_div = $(this);
                 $.ajax({
                     type: "get",
-                    url: "/organization/" + oid + "/fetch_frame/" + cid,
+                    url: `/organization/${oid}/fetch_frame/${cid}/${time}`,
                     data: "",
                     dataType: "json",
                     success: function(response) {
-                        camera_div.replaceWith(
-                            `<div data-org-id=${response.oid} data-camera-id=${response.cid} class="cid-${response.cid} camera-container p-3"></div>`
-                        );
-                        camera_div = $(`.cid-${response.cid}`);
-                        camera_div.append(
-                            `<div class="img-container">
-                                <img class="camera-img" src="${response.image_path}"> </img>
-                            </div>`
-                        );
-                        camera_div.append(`<h5> <a href="/camera/${response.cid}"> ${response.short_name} </a>  </h5>`);
-                        if (response.is_on_fire) {
-                            camera_div.addClass("onfire");
-                            camera_div.append("<p class='fire-text'> Fire! </p>");
-                        } else {
-                            camera_div.append("<p class='nofire-text'> No Fire! </p>");
+                        if (response.should_update) {
+                            camera_div.replaceWith(
+                                `<div data-org-id=${response.oid} data-camera-id=${response.cid} class="cid-${response.cid} camera-container p-3"></div>`
+                            );
+                            camera_div = $(`.cid-${response.cid}`);
+                            camera_div.append(
+                                `<div class="img-container">
+                                    <img class="camera-img" src="${response.image_path}"> </img>
+                                </div>`
+                            );
+                            camera_div.append(`<h5> <a href="/camera/${response.cid}"> ${response.short_name} </a>  </h5>`);
+                            if (response.is_on_fire) {
+                                camera_div.addClass("onfire");
+                                camera_div.append("<p class='fire-text'> Fire! </p>");
+                            } else {
+                                camera_div.append("<p class='nofire-text'> No Fire! </p>");
+                            }
                         }
                     }
-                })
-            })
+                });
+            });
         }
     });
 </script>
