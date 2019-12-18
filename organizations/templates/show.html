@@ -26,7 +26,7 @@
     $(document).ready(function (){
         var minute_in_millis = 60000;
         var time = 0;
-        setInterval(fetch_frames, 2000);
+        setInterval(fetch_frames, minute_in_millis);
 
         function fetch_frames(){
             time = time + 1;
@@ -66,8 +66,13 @@
 </script>
 <style>
     #camera-view {
-        width: 80%;
-        margin: 0 auto;
+        width: 90%;
+        margin: 1em auto;
+        padding: 1.5em;
+        border-radius: 30px;
+        border: 1px solid var(--sign-in-box-border-color);
+        background-color: var(--sign-in-box-bg-color);
+        box-shadow: 1px 1px 5px #ccc;
     }
     .img-container img {
         width: 250px;
@@ -87,6 +92,11 @@
     }
     .nofire-text {
         color: #168200; 
+    }
+    h4 {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 0.5em;
+        margin-bottom: 1em;
     }
     h5 a {
         color: #006ea6 !important;
