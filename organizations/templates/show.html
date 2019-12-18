@@ -8,7 +8,7 @@
         {% for camera in cameras%}
             <div class="p-3 {% if camera.is_on_fire %} onfire {% endif %}">
                 <div class="img-container">
-                    <img src="{{camera.image_path}}"> </img>
+                    <img data-camera-id="{{camera.cid}}" class="camera-img" src="{{camera.image_path}}"> </img>
                 </div>
                 <h5> 
                     <a href="/camera/{{camera.cid}}"> {{camera.short_name }} </a>   
