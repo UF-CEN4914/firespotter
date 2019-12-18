@@ -1,7 +1,7 @@
 from django.db import models
 from organizations.models import Organization
 
-# Create your models here.
+# TODO(lukerpfeiffer): Probably need to add a port number here (unless we assume all cameras run on same port)
 class Camera(models.Model):
     organization = models.ForeignKey(
         'organizations.Organization',
