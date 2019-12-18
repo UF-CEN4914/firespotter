@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from organizations.models import Organization
 from user_details.models import UserDetail
+from cameras.models import Camera
 from django.contrib.auth.models import User
 from .forms import UserForm
 from apis.CameraInterface import CameraInterface
 from apis.FireChecker import FireChecker
 from apis.models.CameraInstance import CameraInstance
+from django.http import JsonResponse
 
 from django.shortcuts import redirect
 
@@ -91,7 +93,19 @@ def profile(request, oid, uid):
     }
     return render(request, "profile.html", context)
 
-    
+def fetch_frame(request, oid, cid):
+    org = Organization.objects.get(pk=oid)
+    camera = Camera.objects.get(pk=cid)
+    image_path = CameraInterface.fetchFrame(camera)
+    data = { 
+        "ip_address": camera.ip_address,
+        "image_path": image_path,
+        "is_on_fire": FireChecker.IsWildFire(image_path),
+        "short_name": camera.short_name,
+        "cid": camera.id,
+        "oid": org.id
+    }
+    return JsonResponse(data)
 
 def details_redirect(request):
     is_signed_in = request.user.is_authenticated
