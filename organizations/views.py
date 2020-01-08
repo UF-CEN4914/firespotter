@@ -5,6 +5,7 @@ from user_details.models import UserDetail
 from cameras.models import Camera
 from django.contrib.auth.models import User
 from .forms import UserForm
+from cameras.forms import CameraForm
 from apis.CameraInterface import CameraInterface
 from apis.FireChecker import FireChecker
 from apis.models.CameraInstance import CameraInstance
@@ -39,6 +40,7 @@ def show(request, pk):
     context = {
         "org": org,
         "cameras": camera_instances,
+        "form": CameraForm()
     }
 
     return render(request, "show.html", context)

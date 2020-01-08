@@ -21,6 +21,46 @@
             </div>
         {% endfor %}
     </div>
+
+    <h4> Create Camera </h4>
+    <form action="/organization/{{org.id}}/create_camera" method="post" class="camera-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    {{ form.short_name.label_tag }}
+                    {{ form.short_name }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.ip_address.label_tag }}
+                    {{ form.ip_address }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.refresh_rate.label_tag }}
+                    {{ form.refresh_rate }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+        </div>
+        <div class="form-group">
+            {{ form.password_confirmation.label_tag }}
+            {{ form.password_confirmation }}
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="org_id" value="{{ org.id }}">
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <input class="btn btn-success" type="submit" value="Create Camera">
+        </div>
+    </form>
 </div>
 <script>
     $(document).ready(function (){
@@ -65,6 +105,10 @@
     });
 </script>
 <style>
+    .col-md-4 {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
     #camera-view {
         width: 90%;
         margin: 1em auto;
