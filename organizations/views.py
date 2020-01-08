@@ -131,7 +131,24 @@ def profile_redirect(request):
     ud = request.user.userdetail_set.all().first()
     return redirect(f"/organization/{ud.organization_id}/profile/{ud.user_id}")
 
-def create_user(request, pk):
+def create_camera(request, pk):
+    if (request.method == "POST"):
+        form = CameraForm(request.POST)
+        form.is_valid()
+        camera = Camera(
+            password = form.cleaned_data['password'],
+            username = form.cleaned_data['username'],
+            short_name = form.cleaned_data['short_name'],
+            ip_address = form.cleaned_data['ip_address'],
+            refresh_rate_in_minutes = form.cleaned_data['refresh_rate']
+        )
+        camera.organization = Organization.objects.get(pk=pk)
+        camera.save()
+
+    next = request.POST.get('next', '/')
+    return HttpResponseRedirect(next)
+
+def create_user(request, oid):
     if (request.method == "POST"):
         form = UserForm(request.POST)
         if (form.is_valid()):
