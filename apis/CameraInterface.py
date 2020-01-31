@@ -1,5 +1,12 @@
 from random import randint
 from amcrest import AmcrestCamera
+from amcrest import AmcrestError
+import os
+import datetime
+import sys
+import logging
+import requests
+import time
 
 class CameraInterface(object):
     # TODO(AaronWilliams): I think a good strategy is to pull the image from the camera and store it locally
@@ -8,11 +15,34 @@ class CameraInterface(object):
     #https://python-amcrest.readthedocs.io/
     @staticmethod
     def fetchFrame(camera):
-        device = AmcrestCamera(camera.ip_address, 80, camera.username, camera.password).camera
-        pic = camera.snapshot()
-        f = open('file.jpeg', 'wb')
-        f.write(pic.read())
-        return f.name
+        logger = logging.getLogger(__name__)
+
+        try:
+            device = AmcrestCamera(host= camera.ip_address, port = 80, user = camera.username, password =camera.password).camera
+            cwd = os.getcwd()
+            path = cwd + '/Images/' + camera.short_name + '.png'   
+            request = device.snapshot(path_file = path)
+
+
+            if request._fp_bytes_read <1000:  
+                raise AmcrestError            
+            f = open(path, 'wb')
+            f.write(request.read()) 
+            del device
+            return path
+
+        except AmcrestError:
+            
+            pwd = os.getcwd()
+            camera_source = pwd+ '/Images/cam_not_found.png'
+            logging.error("Made an exception")
+            logging.error(request._fp_bytes_read)
+            logging.error(request.closed)
+            return camera_source
+
+        
+
+
 
     # TODO(AaronWilliams): This method should return the stream from the camera source we pass in.
     # Camera has: ip_address, username, password which should be sufficent in getting these.
