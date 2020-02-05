@@ -20,21 +20,18 @@ class CameraInterface(object):
         try:
             device = AmcrestCamera(host= camera.ip_address, port = 80, user = camera.username, password =camera.password).camera
             cwd = os.getcwd()
-            path = cwd + '/Images/' + camera.short_name + '.png'   
+            img_path = '/Images/' + camera.short_name + '.png'  
+            path =cwd +img_path 
             request = device.snapshot(path_file = path)
-
-
             if request._fp_bytes_read <1000:  
                 raise AmcrestError            
-            f = open(path, 'wb')
-            f.write(request.read()) 
             del device
-            return path
+            return img_path
 
         except AmcrestError:
             
             pwd = os.getcwd()
-            camera_source = pwd+ '/Images/cam_not_found.png'
+            camera_source = '/Images/cam_not_found.png'
             logging.error("Made an exception")
             logging.error(request._fp_bytes_read)
             logging.error(request.closed)

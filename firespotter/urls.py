@@ -18,6 +18,10 @@ from pages import views as page_views
 from organizations import views as org_views
 from django.urls import path
 from django.conf.urls import include
+from django.contrib.staticfiles.urls import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf import settings
+
 
 urlpatterns = [
     path('', page_views.root, name="root"),
@@ -28,3 +32,7 @@ urlpatterns = [
     path("organization/", include("organizations.urls")),
     path("camera/", include("cameras.urls"))
 ]
+
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
