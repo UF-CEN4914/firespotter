@@ -1,16 +1,25 @@
 import torch
-from models.WildfireModel import WildfireModel
 import cv2
 import numpy as np
+import os
 
 IMG_SZ = 100
 
+class ImageNotFoundException(Exception):
+    "Image not found at the given path"
+    pass
+
 class FireChecker():
 
-    wildfire_model = torch.load('./models/wfm.pt') 
+    wildfire_model = torch.load('./apis/models/wfm.pt') 
 
     @staticmethod
     def IsWildFire(img_path):
+        
+        img_path = "." + img_path
+
+        if not os.path.exists(img_path): raise ImageNotFoundException()
+
         #  read the image and resize it 
         img = cv2.imread(img_path)
         img = cv2.resize(img, (IMG_SZ, IMG_SZ))

@@ -2,7 +2,7 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-
+from apis.models.WildfireModel import WildfireModel
 
 def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'firespotter.settings')
