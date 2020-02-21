@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+   <a class="navbar-brand" href="/">Firespotter</a>
+   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+   <span class="navbar-toggler-icon"></span>
+   </button>
+   <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+         <li class="nav-item">
+            <a class="nav-link" href="/"> Home </a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" href="/organization/details">Organization Details</a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" href="/sign_out">Sign Out</a>
+         </li>
+      </ul>
+   </div>
+</nav>
+<div id="signed-in">
+   <div row>
+      <div class="col-md-3">
+         <a href="/organization/profile">
+            <p> Signed in as {{ request.user.username }} </p>
+         </a>
+      </div>
+   </div>
+</div>
+<style>
+   #signed-in .col-md-3 {
+      border: 1px solid #ccc;
+      background-color: #fefefe;
+   }
+   #signed-in a {
+      color: #006ea6 !important;
+      margin-right: 1em;
+   }
+   #signed-in a:hover {
+      color: #005b8a !important;
+      text-decoration: underline;
+   }
+</style>

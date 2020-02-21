@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<style>
+.sign-in-box {
+    width: 30%;
+    margin: 2em auto;
+    padding: 1em 2em;
+    border-radius: 30px;
+    border: 1px solid var(--sign-in-box-border-color);
+    background-color: var(--sign-in-box-bg-color);
+    color: #000;
+    font-weight: bold;
+    box-shadow: 1px 1px 5px #ccc;
+}
+.btn {
+    width: 100%;
+    border-radius: 20px;
+}
+.sub {
+    text-align: right;
+}
+.sub a {
+    color: #1e83d4;
+    font-size: 12px;
+    text-align: right;
+    font-weight: lighter;
+}
+.sub a:hover {
+    color: #1e83d4;
+    text-decoration: underline;
+}
+</style>
+<div class="home-body">
+    <div class="sign-in-box">
+        <form action="/" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.email.label_tag }}
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+            <br>
+            <div class="form-group">
+                <input class="btn btn-success" type="submit" value="Sign In">
+            </div>
+        </form>
+        <div class="sub">
+            <a href="/sign_up"> Don't have an account? Sign up here...</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

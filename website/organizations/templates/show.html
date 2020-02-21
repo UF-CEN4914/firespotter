@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block page_content %}
+<div id="camera-view">
+    <br></br>
+    <h4> {{ org.name }} </h4>
+    <div class="camera-list d-flex flex-row bd-highlight mb-3 justify-content-start flex-wrap">
+        {% for camera in cameras%}
+            <div data-org-id="{{org.id}}" data-camera-id="{{camera.cid}}" class="camera-container p-3 {% if camera.is_on_fire %} onfire {% endif %}">
+                <div class="img-container">
+                    <img class="camera-img" src="{{camera.image_path}}"> </img>
+                </div>
+                <h5> 
+                    <a href="/camera/{{camera.cid}}"> {{camera.short_name }} </a>   
+                </h5>
+                {% if camera.is_on_fire %}
+                    <p class="fire-text"> On Fire! </p>
+                {% else %}
+                    <p class="nofire-text"> No Fire! </p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <h4> Create Camera </h4>
+    <form action="/organization/{{org.id}}/create_camera" method="post" class="camera-form">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
+                    {{ form.short_name.label_tag }}
+                    {{ form.short_name }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.ip_address.label_tag }}
+                    {{ form.ip_address }}
+                </div>
+                <div class="col-md-4">
+                    {{ form.refresh_rate.label_tag }}
+                    {{ form.refresh_rate }}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+        </div>
+        <div class="form-group">
+            {{ form.password_confirmation.label_tag }}
+            {{ form.password_confirmation }}
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="org_id" value="{{ org.id }}">
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <input class="btn btn-success" type="submit" value="Create Camera">
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function (){
+        var minute_in_millis = 60000;
+        var time = 0;
+        setInterval(fetch_frames, minute_in_millis);
+
+        function fetch_frames(){
+            time = time + 1;
+            $(".camera-container").each(function() {
+                var cid = $(this).data("camera-id");
+                var oid = $(this).data("org-id");
+                var camera_div = $(this);
+                $.ajax({
+                    type: "get",
+                    url: `/organization/${oid}/fetch_frame/${cid}/${time}`,
+                    data: "",
+                    dataType: "json",
+                    success: function(response) {
+                        if (response.should_update) {
+                            camera_div.replaceWith(
+                                `<div data-org-id=${response.oid} data-camera-id=${response.cid} class="cid-${response.cid} camera-container p-3"></div>`
+                            );
+                            camera_div = $(`.cid-${response.cid}`);
+                            camera_div.append(
+                                `<div class="img-container">
+                                    <img class="camera-img" src="${response.image_path}"> </img>
+                                </div>`
+                            );
+                            camera_div.append(`<h5> <a href="/camera/${response.cid}"> ${response.short_name} </a>  </h5>`);
+                            if (response.is_on_fire) {
+                                camera_div.addClass("onfire");
+                                camera_div.append("<p class='fire-text'> Fire! </p>");
+                            } else {
+                                camera_div.append("<p class='nofire-text'> No Fire! </p>");
+                            }
+                        }
+                    }
+                });
+            });
+        }
+    });
+</script>
+<style>
+    .col-md-4 {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    #camera-view {
+        width: 90%;
+        margin: 1em auto;
+        padding: 1.5em;
+        border-radius: 30px;
+        border: 1px solid var(--sign-in-box-border-color);
+        background-color: var(--sign-in-box-bg-color);
+        box-shadow: 1px 1px 5px #ccc;
+    }
+    .img-container img {
+        width: 250px;
+        height: 250px;
+    }
+    .p-3 {
+        border: 1px dashed #cfcfcf; 
+        margin: 0.25em;
+    }
+    
+    .fire-text {
+        color: #bd0016;
+        font-weight: bold;
+    }
+    .onfire {
+        border: 2px solid #bd0016;
+    }
+    .nofire-text {
+        color: #168200; 
+    }
+    h4 {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 0.5em;
+        margin-bottom: 1em;
+    }
+    h5 a {
+        color: #006ea6 !important;
+    }
+    h5 a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
