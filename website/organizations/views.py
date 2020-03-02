@@ -10,8 +10,12 @@ from apis.CameraInterface import CameraInterface
 from apis.FireChecker import FireChecker
 from apis.models.CameraInstance import CameraInstance
 from django.http import JsonResponse
-
 from django.shortcuts import redirect
+import random
+
+FOREST_FIRES = ["/Images/fire1.jpg", "/Images/fire2.png", "/Images/fire3.jpg"]
+NO_FIRES = ["/Images/nofire1.jpg", "/Images/nofire2.jpg", "/Images/nofire3.jpg"]
+MIXED = FOREST_FIRES + NO_FIRES
 
 def show(request, pk):
     is_signed_in = request.user.is_authenticated
@@ -26,6 +30,15 @@ def show(request, pk):
 
     cameras = org.camera_set.all()
     camera_instances = []
+
+    for i in range(0, 3):
+        camera_instance = CameraInstance()
+        camera_instance.ip_address = "0.1.1.1." + str(i)
+        camera_instance.image_path = random.choice(MIXED)
+        camera_instance.is_on_fire = FireChecker.IsWildFire(camera_instance.image_path)
+        camera_instance.short_name = "Dummy Camera" + str(i)
+        camera_instance_cid = i
+        camera_instances.append(camera_instance)
 
     for camera in cameras:
         camera_instance = CameraInstance()
