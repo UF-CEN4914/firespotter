@@ -119,5 +119,5 @@ def seed(self, mode):
 
     users = create_users()
     orgs = create_orgs()
-    create_cameras(orgs)
+    #create_cameras(orgs)
     create_user_details(users, orgs)
