@@ -37,7 +37,7 @@ def show(request, pk):
         camera_instance.image_path = random.choice(MIXED)
         camera_instance.is_on_fire = FireChecker.IsWildFire(camera_instance.image_path)
         camera_instance.short_name = "Dummy Camera" + str(i)
-        camera_instance_cid = i
+        camera_instance.cid = (i+1)*10000
         camera_instances.append(camera_instance)
 
     for camera in cameras:
