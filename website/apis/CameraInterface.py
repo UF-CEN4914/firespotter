@@ -47,5 +47,11 @@ class CameraInterface(object):
     
     @staticmethod
     def fetchFeed(camera):
-        camera_source = "https://www.ready.gov/sites/default/files/2019-09/Wildfire%20toolkit_1.jpg"
-        return camera_source
+        logger = logging.getLogger(__name__)
+        try:
+            device = AmcrestCamera(host= camera.ip_address, port = 80, user = camera.username, password =camera.password).camera
+            to_return = device.mjpeg_url()
+            return to_return
+        except:
+            path = "/Images/int_error.png"
+            return path

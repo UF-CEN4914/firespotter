@@ -31,6 +31,7 @@ def show(request, pk):
         "org": Organization.objects.get(pk=ud.organization_id),
         "camera_feed": CameraInterface.fetchFeed(camera),
         "camera": camera,
-        "is_admin": ud.role_id == 1
+        "is_admin": ud.role_id == 1,
+        "camera_img": CameraInterface.fetchFrame(camera)
     }
     return render(request, "camera_show.html", context)
