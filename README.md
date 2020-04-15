@@ -1,6 +1,8 @@
 # FirePro
 
-## CEN4914 - University of Florida Computer Engineering Senior Design - John Hodson, Luke Pfeiffer, Aaron Williams
+## CEN4914 - University of Florida Computer Engineering Senior Design
+
+### John Hodson, Luke Pfeiffer, Aaron Williams
 
 California has been ravaged by wildfires in recent years. Wildfires in this region have
 displaced tens of thousands of people and each fire can last for months at a time. These
