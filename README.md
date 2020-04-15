@@ -2,6 +2,22 @@
 
 ## CEN4914 - University of Florida Computer Engineering Senior Design - John Hodson, Luke Pfeiffer, Aaron Williams
 
+California has been ravaged by wildfires in recent years. Wildfires in this region have
+displaced tens of thousands of people and each fire can last for months at a time. These
+wildfires are caused by several different sources, including but not limited to, natural events and
+human negligence. Regardless of cause, organizations need to be swiftly alerted to fires in order
+to perform damage control before they become catastrophic. Historically, a state will build large
+fire spotting towers in strategic places and employ individuals to visually spot early signs of a fire. For our CEN4914 project, we decided to create a 21st century solution.
+
+To accomplish this goal, we built a software application that utilizes a machine learning
+model to detect a wildfire in an image provided by a low-cost internet protocol camera. If the
+application detects the presence of a wildfire in the image, it automatically alerts the organization
+of the positive result, allowing for swift action to be taken. Our final product resulted in a
+convolutional neural network with a 94.5% accuracy rating and an interface that can
+automatically fetch camera frames from low-cost internet protocol cameras.
+In the future, we hope to commercialize our project by creating a brand (logo, design
+patterns, social media) around the functioning application.
+
 Camera Used: Amcrest 1920TVL
 
 ## How to run the website on localhost (assumes no dependencies installed):
