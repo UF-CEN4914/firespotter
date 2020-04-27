@@ -1,4 +1,4 @@
-# FirePro
+# FireSpotter
 
 ## CEN4914 - University of Florida Computer Engineering Senior Design
 
@@ -62,5 +62,6 @@ Camera Used: Amcrest 1920TVL
 
 3. Navigate to 127.0.0.1:8000 in a browser and use the following credentials to login:
 
-	Username: john@gmail.com
+	username: john@gmail.com
+	
 	password: password
