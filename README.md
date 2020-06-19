@@ -22,7 +22,7 @@ patterns, social media) around the functioning application.
 
 Camera Used: Amcrest 1920TVL
 
-## How to run the website on localhost (assumes no dependencies installed):
+## How to run the website on localhost (assumes no dependencies installed in a Debian enviornment):
 
 1. Run the following commands in a terminal:
 
